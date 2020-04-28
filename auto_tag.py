@@ -27,7 +27,11 @@ if 'tags' not in list(OLD):
 for tag1 in list(TAG_CONFIG):
     if tag1 in list(OLD['tags']):
         #print('Found ' + str(tag1) + ' in tags')
-        new['tags'].append(TAG_CONFIG[tag1])
+        if type(TAG_CONFIG[tag1]) is list:
+            for tag_to_add in TAG_CONFIG[tag1]:
+                new['tags'].append(tag_to_add)
+        else:
+            new['tags'].append(TAG_CONFIG[tag1])
 
 
 
