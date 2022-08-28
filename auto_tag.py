@@ -7,7 +7,10 @@ if False:
 import json
 import sys
 from pathlib import Path
+import os
 
+
+PATH_TASK_CONTINUOUS_TAGS='.task/task_continuous_tags'
 
 OLD = json.loads(sys.stdin.readline())
 
@@ -43,6 +46,19 @@ while True:
                 if TAG_CONFIG[tag1] not in new['tags']:
                     new['tags'].append(TAG_CONFIG[tag1])
 
+
+if os.path.isfile(PATH_TASK_CONTINUOUS_TAGS):
+    continuous_tags = []
+    with open(str(Path.home()) + '/' + PATH_TASK_CONTINUOUS_TAGS, 'r') as continuous_tags_file:
+        for line in continuous_tags_file:
+            for tag in line.split():
+                if tag not in continuous_tags:
+                    continuous_tags.append(tag)
+
+
+    for tag in continuous_tags:
+        if tag not in new['tags']:
+            new['tags'].append(tag)
 
 
 print(json.dumps(new))
